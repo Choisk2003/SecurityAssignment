@@ -1,4 +1,5 @@
 var http = require("http");
+var fs = require("fs");
 var url = require("url");
 
 var app = http.createServer(function(request, response) {
@@ -9,7 +10,9 @@ var app = http.createServer(function(request, response) {
     title = "Welcome";
   }
   response.writeHead(200);
-  var template = `<!DOCTYPE html>
+  fs.readFile(`data/${queryData.id}`, "utf8", function(err, description) {
+    var template = `
+  <!DOCTYPE html>
   <html>
   <head>
       <meta charset="UTF-8">
@@ -23,9 +26,11 @@ var app = http.createServer(function(request, response) {
         <li><a href="/?id=us">Us</a></li>
       </ul>
       <h2>It's about ${title}</h2>
+      <p>${description}</p>
   </body>
   </html>`;
-  response.end(template);
+    response.end(template);
+  });
 });
 
 app.listen(3000);
