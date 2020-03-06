@@ -16,6 +16,12 @@ var app = http.createServer(function(request, response) {
       <title>${title}</title>
   </head>
   <body>
+      <h1><a href="/">Welcome</a></h1>
+      <ul>
+        <li><a href="/?id=me">Me</a></li>
+        <li><a href="/?id=you">You</a></li>
+        <li><a href="/?id=us">Us</a></li>
+      </ul>
       <h2>It's about ${title}</h2>
   </body>
   </html>`;
