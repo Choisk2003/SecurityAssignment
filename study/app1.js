@@ -3,7 +3,7 @@ var fs = require("fs");
 var url = require("url");
 var qs = require("querystring");
 
-function templateMain(title, list, body) {
+function templateMain(title, list, body, control) {
   return `
   <!DOCTYPE html>
   <html>
@@ -14,7 +14,7 @@ function templateMain(title, list, body) {
   <body>
     <h1><a href="/">Welcome</a></h1>
     ${list}
-    <a href="/create">create</a>
+    ${control}
     ${body}
   </body>
   </html>`;
@@ -43,7 +43,8 @@ var app = http.createServer(function(request, response) {
         var template = templateMain(
           title,
           templateList(filelist),
-          `<h2>${title}</h2>${description}`
+          `<h2>${title}</h2>${description}`,
+          `<a href="/create">create</a>`
         );
 
         response.writeHead(200);
@@ -57,7 +58,8 @@ var app = http.createServer(function(request, response) {
           var template = templateMain(
             title,
             templateList(filelist),
-            `<h2>${title}</h2>${description}`
+            `<h2>${title}</h2>${description}`,
+            `<a href="/create">create</a>  <a href="/update?id=${title}">update</a>  <a href="/delete">delete</a>`
           );
 
           response.writeHead(200);
@@ -75,8 +77,9 @@ var app = http.createServer(function(request, response) {
         `<form action="/create_" method="post">
           <p><input type="text" name="title" placeholder="title"></p>
           <p><textarea name="description" placeholder="description"></textarea></p>
-          <p><input type="submit"></p>
-        </form>`
+          <p><input type="submit" value="Create"></p>
+        </form>`,
+        ``
       );
 
       response.writeHead(200);
@@ -94,6 +97,43 @@ var app = http.createServer(function(request, response) {
       ) {
         response.writeHead(302, { Location: `/?id=${post.title}` });
         response.end();
+      });
+    });
+  } else if (pathname === "/update") {
+    fs.readdir("./data", function(error, filelist) {
+      fs.readFile(`data/${queryData.id}`, "utf8", function(err, description) {
+        var title = "Update " + queryData.id;
+
+        var template = templateMain(
+          title,
+          templateList(filelist),
+          `<form action="/update_" method="post">
+          <input type="hidden" name="id" value="${queryData.id}">
+          <p><input type="text" name="title" placeholder="title" value="${queryData.id}"></p>
+          <p><textarea name="description" placeholder="description">${description}</textarea></p>
+          <p><input type="submit" value="Update"></p>
+        </form>`,
+          ``
+        );
+
+        response.writeHead(200);
+        response.end(template);
+      });
+    });
+  } else if (pathname === "/update_") {
+    var body = "";
+    request.on("data", function(data) {
+      body += data;
+    });
+    request.on("end", function() {
+      var post = qs.parse(body);
+      fs.rename(`data/${post.id}`, `data/${post.title}`, function(err) {
+        fs.writeFile(`data/${post.title}`, post.description, "utf8", function(
+          err
+        ) {
+          response.writeHead(302, { Location: `/?id=${post.title}` });
+          response.end();
+        });
       });
     });
   } else {
