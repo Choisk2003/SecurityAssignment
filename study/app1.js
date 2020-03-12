@@ -58,8 +58,15 @@ var app = http.createServer(function(request, response) {
           var template = templateMain(
             title,
             templateList(filelist),
-            `<h2>${title}</h2>${description}`,
-            `<a href="/create">create</a>  <a href="/update?id=${title}">update</a>  <a href="/delete">delete</a>`
+            `<h2>${title}</h2>
+            <p>
+              ${description}
+            </p>`,
+            `<a href="/create">create</a>  <a href="/update?id=${title}">update</a>
+            <form action="/delete_" method="post">
+              <input type="hidden" name="id" value="${title}">
+              <input type="submit" value="Delete">
+            </form>`
           );
 
           response.writeHead(200);
@@ -134,6 +141,18 @@ var app = http.createServer(function(request, response) {
           response.writeHead(302, { Location: `/?id=${post.title}` });
           response.end();
         });
+      });
+    });
+  } else if (pathname === "/delete_") {
+    var body = "";
+    request.on("data", function(data) {
+      body += data;
+    });
+    request.on("end", function() {
+      var post = qs.parse(body);
+      fs.unlink(`data/${post.id}`, function(err) {
+        response.writeHead(302, { Location: `/` });
+        response.end();
       });
     });
   } else {
