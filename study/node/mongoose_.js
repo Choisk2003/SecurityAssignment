@@ -1,14 +1,6 @@
 const mongoose = require("mongoose");
 const http = require("http");
 const url = require("url");
-//DB 연동하는 과정에서 동기적인 문제가 있는것 같다. promise, async와 await에 대해 공부하고 해결할 필요가 있을 것 같다.
-mongoose.connect("mongodb://localhost:27017/test", function() {
-  const db = mongoose.connection;
-  db.on("error", console.error.bind(console, "connection error:"));
-  db.once("open", function() {
-    console.log("Connected!!");
-  });
-});
 
 const CatSchema = new mongoose.Schema({
   name: String,
@@ -18,16 +10,25 @@ const CatSchema = new mongoose.Schema({
 
 var Cat = mongoose.model("Cat", CatSchema);
 
-var listTemplate = function() {
-  Cat.find({}, function(err, cats) {
-    console.log(cats);
-    return cats;
-  });
-};
+function getCatsList() {
+  return Cat.find({});
+}
 
-var app = http.createServer(function(request, response) {
+function catsListTemplate(cats) {
+  var catsList = "<ul>";
+  for (let i = 0; i < cats.length; i++) {
+    catsList =
+      catsList +
+      `<li>이름 : ${cats[i].name} 색 : ${cats[i].color} 나이: ${cats[i].age}</li>`;
+  }
+  catsList = catsList + "</ul>";
+  return catsList;
+}
+
+var app = http.createServer(async function(request, response) {
   if (url.parse(request.url, true).pathname === "/") {
-    const list = listTemplate();
+    const list = await getCatsList().then(list => catsListTemplate(list));
+    console.log("------------------------------");
     const template = `
     <!DOCTYPE html>
     <html>
@@ -39,8 +40,8 @@ var app = http.createServer(function(request, response) {
       <form action="/input" method="post">
         <input type="text">
         <input type="submit" value="upload">
-        ${list}
       </form>
+      ${list}
     </body>
     </html>
     `;
@@ -48,4 +49,14 @@ var app = http.createServer(function(request, response) {
   }
 });
 
-app.listen(3000);
+mongoose
+  .connect("mongodb://localhost:27017/test", function() {
+    const db = mongoose.connection;
+    db.on("error", console.error.bind(console, "connection error:"));
+    db.once("open", function() {
+      console.log("Connected!!");
+    });
+  })
+  .then(() => {
+    app.listen(3000);
+  });
