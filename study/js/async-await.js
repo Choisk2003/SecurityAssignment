@@ -25,7 +25,7 @@ async function test() {
 
 function foo(num, sec) {
   return new Promise(function(resolve, reject) {
-    setTimeout(function() {
+    setTimeout(() => {
       console.log(num);
       resolve("..");
     }, sec);
