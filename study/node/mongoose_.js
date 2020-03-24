@@ -28,7 +28,6 @@ function catsListTemplate(cats) {
 var app = http.createServer(async function(request, response) {
   if (url.parse(request.url, true).pathname === "/") {
     const list = await getCatsList().then(list => catsListTemplate(list));
-    console.log("------------------------------");
     const template = `
     <!DOCTYPE html>
     <html>
