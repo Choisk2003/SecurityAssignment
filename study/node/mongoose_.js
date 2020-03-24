@@ -18,12 +18,18 @@ function getCatsList() {
 function catsListTemplate(cats) {
   var catsList = `
   <table style="width: 100%">
-    <thead><tr><th>이름</th><th>색</th><th>나이</th></tr></thead>
+    <thead><tr><th>이름</th><th>색</th><th>나이</th><th></th></tr></thead>
       <tbody>`;
   for (let i = 0; i < cats.length; i++) {
     catsList =
       catsList +
-      `<tr><th>${cats[i].name}</th><th>${cats[i].color}</th><th>${cats[i].age}</th></tr></tr>`;
+      `
+      <tr>
+        <th>${cats[i].name}</th>
+        <th>${cats[i].color}</th>
+        <th>${cats[i].age}</th>
+        <th><form action ="/delete" method="post"><input type="hidden" name="id" value="${cats[i]._id}"><input type="submit" value="삭제"></form></th>
+      </tr>`;
   }
   catsList = catsList + "</tbody></table>";
   return catsList;
@@ -66,6 +72,18 @@ var app = http.createServer(async function(request, response) {
           response.end();
         }
       );
+    });
+  } else if (pathname === "/delete") {
+    let body = "";
+    request.on("data", data => {
+      body += data;
+    });
+    request.on("end", () => {
+      body = qs.parse(body);
+      Cat.deleteOne({ _id: body.id }, function(err, doc) {
+        response.writeHead(302, { Location: `/` });
+        response.end();
+      });
     });
   } else {
     response.writeHead(404);
