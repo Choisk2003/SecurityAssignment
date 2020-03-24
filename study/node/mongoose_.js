@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const http = require("http");
 const url = require("url");
+const qs = require("querystring");
 
 const CatSchema = new mongoose.Schema({
   name: String,
@@ -15,18 +16,22 @@ function getCatsList() {
 }
 
 function catsListTemplate(cats) {
-  var catsList = "<ul>";
+  var catsList = `
+  <table style="width: 100%">
+    <thead><tr><th>이름</th><th>색</th><th>나이</th></tr></thead>
+      <tbody>`;
   for (let i = 0; i < cats.length; i++) {
     catsList =
       catsList +
-      `<li>이름 : ${cats[i].name} 색 : ${cats[i].color} 나이: ${cats[i].age}</li>`;
+      `<tr><th>${cats[i].name}</th><th>${cats[i].color}</th><th>${cats[i].age}</th></tr></tr>`;
   }
-  catsList = catsList + "</ul>";
+  catsList = catsList + "</tbody></table>";
   return catsList;
 }
 
 var app = http.createServer(async function(request, response) {
-  if (url.parse(request.url, true).pathname === "/") {
+  let pathname = url.parse(request.url, true).pathname;
+  if (pathname === "/") {
     const list = await getCatsList().then(list => catsListTemplate(list));
     const template = `
     <!DOCTYPE html>
@@ -37,7 +42,9 @@ var app = http.createServer(async function(request, response) {
     </head>
     <body>
       <form action="/input" method="post">
-        <input type="text">
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="color" placeholder="color">
+        <input type="text" name="age" placeholder="age">
         <input type="submit" value="upload">
       </form>
       ${list}
@@ -45,6 +52,24 @@ var app = http.createServer(async function(request, response) {
     </html>
     `;
     response.end(template);
+  } else if (pathname === "/input") {
+    let body = "";
+    request.on("data", data => {
+      body += data;
+    });
+    request.on("end", () => {
+      body = qs.parse(body);
+      Cat.create(
+        { name: body.name, color: body.color, age: body.age },
+        function(err, doc) {
+          response.writeHead(302, { Location: `/` });
+          response.end();
+        }
+      );
+    });
+  } else {
+    response.writeHead(404);
+    response.end("Not Found");
   }
 });
 
