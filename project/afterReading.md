@@ -24,7 +24,7 @@
 
 ---
 
-html css javascript node.js mongodb ejs
+html css javascript node.js
 
 ## 얻는 것
 
