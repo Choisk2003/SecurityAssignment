@@ -2,25 +2,20 @@
 
 html,
 body {
+  width: 100%;
   height: 100%;
-  margin: 0%;
-}
-
-.signinImg {
-  float: left;
-  margin-left: 170px;
-  padding-top: 60px;
+  margin: 0;
 }
 
 .signinup {
   margin-top: 200px;
-  margin-left: 100px;
+  margin-left: 37%;
   float: left;
   width: 350px;
   border: 1px solid #dbdbdb;
 }
 
-.bookreport {
+.signTitle {
   width: max-content;
   margin: auto;
 }
