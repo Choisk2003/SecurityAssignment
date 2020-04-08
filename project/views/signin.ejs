@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
   <head>
     <meta charset="UTF-8" />
     <title>After Reading</title>
@@ -12,18 +12,26 @@
         <h1 class="signTitle">독후감</h1>
         <br />
         <div class="signinForm">
-          <form class="signinForm">
+          <form class="signinForm" action="/" method="POST">
             <input
               class="inputform"
               name="name"
               type="text"
               placeholder="이메일 또는 아이디"
+              required
             />
             <input
               class="inputform"
               name="password"
               type="password"
               placeholder="비밀번호"
+              required
+            />
+            <input
+              class="inputform"
+              type="submit"
+              value="로그인"
+              style="margin-left: 45px;"
             />
           </form>
         </div>
