@@ -43,6 +43,9 @@
             />
             <input class="inputform" type="submit" value="회원가입" />
           </form>
+          <% if(message) {%>
+          <a style="font-size: 10px; color: red;"><%= message %></a>
+          <%}%>
         </div>
       </div>
     </div>
