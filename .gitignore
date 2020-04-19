@@ -366,6 +366,7 @@ study/node_modules/sliced/index.js
 study/node_modules/sliced/LICENSE
 study/node_modules/sliced/package.json
 study/node_modules/sliced/README.md
+project/node-modules/
 project/node_modules/.bin/mime
 project/node_modules/.bin/mime.cmd
 project/node_modules/.bin/mime.ps1
