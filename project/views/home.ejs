@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>After Reading</title>
+    <link rel="shortcut icon" href="note.png" type="image/x-icon" />
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body>
+    <div class="homeHead">
+      <div><a href="/logout">로그아웃</a></div>
+      <div><a name="userName" href="/logout"><%= userName %></a></div>
+    </div>
+    <div class="searchDiv">
+      <form class="search" action="/search">
+        <input
+          type="text"
+          name="book"
+          placeholder="책 제목"
+          style="width: 40%;"
+        />
+        <input
+          type="text"
+          name="writer"
+          placeholder="작가 이름"
+          style="width: 10%;"
+        />
+        <input type="submit" value="검색" />
+      </form>
+    </div>
+  </body>
+</html>

@@ -12,7 +12,7 @@
         <h1 class="signTitle">독후감</h1>
         <br />
         <div class="signinForm">
-          <form class="signinForm" action="/" method="POST">
+          <form class="signinForm" action="/sign" method="POST">
             <input
               class="inputform"
               name="name"
@@ -34,10 +34,13 @@
               style="margin-left: 45px;"
             />
           </form>
+          <% if(message) {%>
+          <a style="font-size: 10px; color: red;"><%= message %></a>
+          <%}%>
         </div>
       </div>
       <div class="signup">
-        계정이 없으신가요? <a href="/signup">회원가입</a>
+        계정이 없으신가요? <a href="/sign/up">회원가입</a>
       </div>
     </div>
   </body>
