@@ -1,13 +1,16 @@
 const express = require("express");
-const session = require("express-session");
 const router = express.Router();
 
-router.get("/", (req, res) => res.render("signin"));
-router.post("/", (req, res) => res.render("signin"));
-
-router.get("/signup", (req, res) => res.render("signup", { message: null }));
-router.post("/signup", (req, res) => {
-  require("../api/signup")(req, res);
+router.get("/", (req, res) => {
+  if (req.session.logined !== undefined) {
+    res.render("home", { userName: req.session.userName });
+  } else {
+    res.redirect("/sign");
+  }
 });
 
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/sign");
+});
 module.exports = router;
