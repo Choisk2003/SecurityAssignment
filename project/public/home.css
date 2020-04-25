@@ -38,6 +38,20 @@ body {
   margin-top: 10px;
 }
 
+.result {
+  text-align: center;
+}
+
+.results {
+  display: inline-block;
+  border-spacing: 18px;
+  border-collapse: separate;
+}
+.resultImg {
+  width: 66px;
+  height: 100px;
+}
+
 .search * {
   height: 30px;
   margin-left: 20px;
