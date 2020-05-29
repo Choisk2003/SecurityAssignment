@@ -31,18 +31,20 @@
       </form>
     </div>
     <div class="result">
-      <%= results %>
-      <!-- <% if(results !== undefined) {%> <% if(typeof results === Array) {%>
+      <% if (results !== undefined ){%>
       <table class="resultsTable">
-        <% for(let i = 0; i < result.length; i++) { %>
+        <% for (let i = 0; i < repeat; i++) { %>
         <tr>
-          <td><img class="resultImg" src="<%= results[i].image%>" /></td>
-          <td><%=results[i].title%></td>
-          <td><%=results[i].author%></td>
+          <td><img class="resultImg" src=" <%= results[i].image %> " /></td>
+          <td><%- results[i].title %></td>
+          <td><%- results[i].author %></td>
+          <td>
+            <form><input type="submit" value="작성하기" /></form>
+          </td>
         </tr>
         <% } %>
       </table>
-      <% } else {%> <%= results %> <%}%><% } %> -->
+      <% } %>
     </div>
   </body>
 </html>

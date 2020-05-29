@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  if (req.session.logined !== undefined) {
-    res.render("home", { userName: req.session.userName, results: undefined });
+  if (req.session.logined === true) {
+    res.render("home", {
+      userName: req.session.userName,
+      results: undefined,
+      repeat: undefined,
+    });
   } else {
     res.redirect("/sign");
   }
@@ -12,7 +16,11 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const result = JSON.parse(req.body.results);
   console.log(result);
-  res.render("home", { userName: req.session.userName, results: result });
+  res.render("home", {
+    userName: req.session.userName,
+    results: result,
+    repeat: result.length,
+  });
 });
 
 router.get("/logout", (req, res) => {

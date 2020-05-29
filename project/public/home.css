@@ -64,3 +64,14 @@ body {
   outline: none;
   border: 1px solid #868f81;
 }
+
+.resultsTable {
+  display: inline-block;
+  border-spacing: 18px;
+  border-collapse: separate;
+}
+
+.resultImg {
+  width: 66px;
+  height: 100px;
+}
