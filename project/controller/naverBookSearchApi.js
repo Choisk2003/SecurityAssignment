@@ -1,6 +1,5 @@
 const request = require("request");
-const NAVER_CLIENT_ID = "TRFNgiDKqvNEWMurpfQW";
-const NAVER_CLIENT_SECRET = "MJZVzKDkGZ";
+const config = require("../config/naver_api-config.json");
 const url = "https://openapi.naver.com/v1/search/book_adv.json";
 
 module.exports = function (book, author) {
@@ -15,8 +14,8 @@ module.exports = function (book, author) {
         uri: url,
         qs: option,
         headers: {
-          "X-Naver-Client-Id": NAVER_CLIENT_ID,
-          "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+          "X-Naver-Client-Id": config.NAVER_CLIENT_ID,
+          "X-Naver-Client-Secret": config.NAVER_CLIENT_SECRET,
         },
       },
       function (err, res, body) {

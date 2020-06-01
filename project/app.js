@@ -15,6 +15,7 @@ db.once("open", function () {
 });
 mongoose.connect(dbUrl);
 
+app.disable("x-powered-by");
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.use(express.static("./public"));

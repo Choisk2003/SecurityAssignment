@@ -1982,3 +1982,4 @@ project/node_modules/ajv/lib/ajv.js
 project/node_modules/ajv/dist/ajv.min.js
 project/node_modules/ajv/dist/ajv.bundle.js
 project/node_modules/ajv/.tonic_example.js
+project/config/naver_api-config.json
