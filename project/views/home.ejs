@@ -31,7 +31,9 @@
       </form>
     </div>
     <div class="result">
-      <% if (results !== undefined ){%>
+      <% if (typeof(results) === 'string' ) { %>
+      <p>검색할 단어를 확인 후 다시 검색해주세요.</p>
+      <% } else if (results !== undefined ){%>
       <table class="resultsTable">
         <% for (let i = 0; i < repeat; i++) { %>
         <tr>
