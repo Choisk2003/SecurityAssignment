@@ -41,7 +41,13 @@
           <td><%- results[i].title %></td>
           <td><%- results[i].author %></td>
           <td>
-            <form><input type="submit" value="작성하기" /></form>
+            <form method="post" action="/write">
+              <input
+                type="hidden"
+                value="<%= JSON.stringify(results[i])%>"
+                name="choose"
+              /><input type="submit" value="작성하기" />
+            </form>
           </td>
         </tr>
         <% } %>

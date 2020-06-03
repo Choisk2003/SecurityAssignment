@@ -15,7 +15,6 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const result = JSON.parse(req.body.results);
-  console.log(result);
   res.render("home", {
     userName: req.session.userName,
     results: result,

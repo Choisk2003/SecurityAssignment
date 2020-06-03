@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const accountRouter = require("./routes/account");
 const indexRouter = require("./routes/index");
+const writeRouter = require("./routes/write");
 
 const dbUrl = "mongodb://localhost:27017/AfterReading";
 const db = mongoose.connection;
@@ -35,5 +36,6 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/sign", accountRouter);
+app.use("/write", writeRouter);
 
 app.listen(3000);
