@@ -8,12 +8,12 @@
   </head>
   <body>
     <div class="homeHead">
-      <div><a href="/logout">로그아웃</a></div>
-      <div><a name="userName" href="/logout"><%= userName %></a></div>
+      <book class="book"><%- results.title %></book>
     </div>
     <form class="inputForm">
       <input type="text" class="title" name="title" />
       <textarea class="maintext" name="mainText"></textarea>
+      <input type="submit" class="submit value="제출" />
     </form>
   </body>
 </html>

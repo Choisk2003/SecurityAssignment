@@ -11,7 +11,7 @@ body {
   border: 1px solid #dbdbdb;
   width: 99.87%;
   line-height: 60px;
-  text-align: right;
+  text-align: center;
 }
 
 .homeHead a {
@@ -28,6 +28,11 @@ body {
 .homeHead div {
   display: inline-block;
   width: 120px;
+}
+
+.book {
+  width: auto;
+  height: 40px;
 }
 
 .inputForm {
@@ -47,7 +52,13 @@ body {
 }
 
 .maintext {
+  margin: 0 auto;
+  display: block;
   margin-top: 10px;
   width: 90%;
-  height: 90%;
+  height: 85%;
+}
+
+.submit {
+  margin-top: 10px;
 }
